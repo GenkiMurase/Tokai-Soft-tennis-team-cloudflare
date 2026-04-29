@@ -3,3 +3,4 @@ dist
 .wrangler
 .dev.vars
 .env.local
+cloudflare/d1/image-migration-failures.json

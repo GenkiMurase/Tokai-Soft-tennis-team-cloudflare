@@ -18,6 +18,9 @@ const PUBLIC_BASE_URL = (
 const OUTPUT_SQL =
   process.env.IMAGE_MIGRATION_SQL_OUTPUT ||
   path.resolve(process.cwd(), 'cloudflare/d1/update-media-urls.sql');
+const OUTPUT_FAILURES =
+  process.env.IMAGE_MIGRATION_FAILURES_OUTPUT ||
+  path.resolve(process.cwd(), 'cloudflare/d1/image-migration-failures.json');
 const DRY_RUN = process.argv.includes('--dry-run');
 
 const SOURCE_FILES = {
@@ -346,30 +349,42 @@ async function main() {
   const sourceUrls = buildMediaReferenceList(data);
   const tempDir = await mkdtemp(path.join(os.tmpdir(), 'tokai-r2-migrate-'));
   const uploadedByUrl = new Map();
+  const failures = [];
 
   try {
     for (const url of sourceUrls) {
-      const downloaded = await downloadImage(url, tempDir);
-      const publicUrl = `${PUBLIC_BASE_URL}/${downloaded.objectKey}`;
+      try {
+        const downloaded = await downloadImage(url, tempDir);
+        const publicUrl = `${PUBLIC_BASE_URL}/${downloaded.objectKey}`;
 
-      if (!DRY_RUN) {
-        await uploadToR2(downloaded.objectKey, downloaded.filePath, downloaded.contentType);
+        if (!DRY_RUN) {
+          await uploadToR2(downloaded.objectKey, downloaded.filePath, downloaded.contentType);
+        }
+
+        uploadedByUrl.set(url, {
+          objectKey: downloaded.objectKey,
+          publicUrl,
+          size: downloaded.size,
+          contentType: downloaded.contentType,
+        });
+        console.log(`${DRY_RUN ? 'Prepared' : 'Uploaded'} ${url} -> ${publicUrl}`);
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        failures.push({ url, error: message });
+        console.warn(`Skipped ${url}: ${message}`);
       }
-
-      uploadedByUrl.set(url, {
-        objectKey: downloaded.objectKey,
-        publicUrl,
-        size: downloaded.size,
-        contentType: downloaded.contentType,
-      });
     }
 
     const updated = buildUpdatedRows(data, uploadedByUrl);
     const sql = buildSql(updated);
     await writeFile(OUTPUT_SQL, sql, 'utf8');
+    await writeFile(OUTPUT_FAILURES, JSON.stringify(failures, null, 2), 'utf8');
 
     console.log(`${DRY_RUN ? 'Prepared' : 'Uploaded'} ${uploadedByUrl.size} images`);
     console.log(`Wrote ${OUTPUT_SQL}`);
+    if (failures.length > 0) {
+      console.log(`Recorded ${failures.length} failed URLs in ${OUTPUT_FAILURES}`);
+    }
   } finally {
     await rm(tempDir, { recursive: true, force: true });
   }
