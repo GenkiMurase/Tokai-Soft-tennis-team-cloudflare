@@ -1,0 +1,4 @@
+ADMIN_USERNAME=admin@tokai-soft.com
+ADMIN_PASSWORD=replace-with-production-password
+SESSION_SECRET=replace-with-long-random-secret
+R2_PUBLIC_BASE_URL=https://pub-your-real-r2-domain.r2.dev

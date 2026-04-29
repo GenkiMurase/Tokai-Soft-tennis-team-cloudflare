@@ -1,0 +1,25 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "tokai-softtennis-hp",
+  "compatibility_date": "2026-04-28",
+  "pages_build_output_dir": "./dist",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "tokai-softtennis-db",
+      "database_id": "REPLACE_WITH_PRODUCTION_D1_DATABASE_ID"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "IMAGES_BUCKET",
+      "bucket_name": "tokai-softtennis-images"
+    }
+  ],
+  "vars": {
+    "ADMIN_USERNAME": "admin@tokai-soft.com"
+  }
+}

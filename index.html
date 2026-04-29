@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>東海大学ソフトテニス部</title>
+    <meta name="description" content="東海大学ソフトテニス部の公式サイト。活動紹介、選手情報、試合予定、お知らせを掲載しています。" />
+    <link rel="canonical" href="https://tokai-softtennis.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="東海大学ソフトテニス部" />
+    <meta property="og:description" content="東海大学ソフトテニス部の公式サイト。活動紹介、選手情報、試合予定、お知らせを掲載しています。" />
+    <meta property="og:url" content="https://tokai-softtennis.com/" />
+    <meta property="og:image" content="https://tokai-softtennis.com/images/logo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0EDBZTH5DQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-0EDBZTH5DQ');
+    </script>
+    <script>
+      const host = window.location.hostname;
+      if (host === 'tokaiuniv-softtennisteam.netlify.app') {
+        const newUrl = window.location.href.replace(
+          'tokaiuniv-softtennisteam.netlify.app',
+          'tokai-softtennis.com'
+        );
+        window.location.replace(newUrl);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
