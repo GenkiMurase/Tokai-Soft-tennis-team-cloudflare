@@ -10,7 +10,7 @@
     {
       "binding": "DB",
       "database_name": "tokai-softtennis-db",
-      "database_id": "REPLACE_WITH_PRODUCTION_D1_DATABASE_ID"
+      "database_id": "ec4a5391-a0b9-43be-b13d-01e1275c7015"
     }
   ],
   "r2_buckets": [

@@ -355,7 +355,6 @@ async function main() {
     `-- Generated at: ${nowIso()}`,
     '',
     'PRAGMA defer_foreign_keys = ON;',
-    'BEGIN TRANSACTION;',
     '',
   ];
 
@@ -370,7 +369,6 @@ async function main() {
     if (sql) parts.push(sql);
   }
 
-  parts.push('COMMIT;');
   parts.push('');
 
   await mkdir(path.dirname(OUTPUT_FILE), { recursive: true });
