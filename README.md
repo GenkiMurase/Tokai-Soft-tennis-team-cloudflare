@@ -124,6 +124,14 @@ npm run build
 npx wrangler pages deploy dist
 ```
 
+GitHub Actions で自動化する場合は、以下の GitHub Secrets を設定してください。
+
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ACCOUNT_ID`
+
+ワークフローは [deploy-pages.yml](/Users/gm/個人/プログラム/東海大学ソフトテニス部HP/.github/workflows/deploy-pages.yml) に入っています。
+Cloudflare Pages の project name は `tokai-softtennis-hp` を前提にしています。
+
 ## 現在の移行状況
 
 - D1 本番 DB は作成済み
