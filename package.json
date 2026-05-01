@@ -11,6 +11,7 @@
     "db:init:d1:remote": "npx wrangler d1 execute tokai-softtennis-db --remote --file=./cloudflare/d1/schema.sql",
     "export:csv": "node ./scripts/export-csv-to-d1.mjs",
     "export:supabase": "node ./scripts/export-supabase-to-d1.mjs",
+    "generate:session-secret": "node ./scripts/generate-session-secret.mjs",
     "import:d1:local": "npx wrangler d1 execute tokai-softtennis-db --local --file=./cloudflare/d1/import-from-supabase.sql",
     "import:d1:remote": "npx wrangler d1 execute tokai-softtennis-db --remote --file=./cloudflare/d1/import-from-supabase.sql",
     "migrate:images:r2": "node ./scripts/migrate-images-to-r2.mjs",
